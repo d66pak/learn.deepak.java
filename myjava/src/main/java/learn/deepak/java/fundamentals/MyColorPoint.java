@@ -1,7 +1,5 @@
 package learn.deepak.java.fundamentals;
 
-import com.sun.org.apache.xml.internal.serializer.utils.SerializerMessages_en;
-
 import java.io.InvalidObjectException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
