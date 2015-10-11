@@ -1,0 +1,6 @@
+## Intellij related
+*.iml
+.idea/
+
+## Build
+target/
