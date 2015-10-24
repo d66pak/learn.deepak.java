@@ -37,8 +37,8 @@ public class ReadAndWrite {
         printState(buffer);
         // Capacity: 8 Limit: 2 Position 0
 
-        buffer.put((byte) 'e');
-        buffer.put((byte) 'f');
+        buffer.put((byte)'e');
+        buffer.put((byte)'f');
         printState(buffer);
         // Capacity: 8 Limit: 2 Position 2
 
@@ -47,7 +47,7 @@ public class ReadAndWrite {
         // Capacity: 8 Limit: 2 Position 0
 
         System.out.println((char)buffer.get());
-        System.out.println((char) buffer.get());
+        System.out.println((char)buffer.get());
         // e
         // f
         printState(buffer);
@@ -56,6 +56,61 @@ public class ReadAndWrite {
         buffer.clear();
         printState(buffer);
         // Capacity: 8 Limit: 8 Position 0
+
+        /**
+         * If correct indexes are specified in get() and put() then
+         * its possible to access any byte
+         *
+         * Same as above but specifying exact index to get() and put()
+         * Observe that values of state variables are unchanged
+         */
+
+        System.out.println("-----------------------------------------");
+        ByteBuffer buffer1 = ByteBuffer.allocate(8);
+        printState(buffer1);
+        // Capacity: 8 Limit: 8 Position 0
+
+        buffer1.put(0, (byte)'a');
+        buffer1.put(1, (byte)'b');
+        buffer1.put(2, (byte)'c');
+        buffer1.put(3, (byte)'d');
+        printState(buffer1);
+        // Capacity: 8 Limit: 8 Position 0
+
+        // buffer1.flip();
+        // printState(buffer1);
+
+        System.out.println((char)buffer1.get(0));
+        System.out.println((char)buffer1.get(1));
+        System.out.println((char)buffer1.get(0));
+        // a
+        // b
+        // a
+        printState(buffer1);
+        // Capacity: 8 Limit: 8 Position 0
+
+        // buffer1.flip();
+        // printState(buffer1);
+
+        buffer1.put(0, (byte)'A');
+        buffer1.put(4, (byte)'e');
+        buffer1.put(5, (byte)'f');
+        printState(buffer1);
+        // Capacity: 8 Limit: 8 Position 0
+
+        // buffer1.flip();
+        // printState(buffer1);
+
+        System.out.println((char)buffer1.get(0));
+        System.out.println((char)buffer1.get(1));
+        System.out.println((char)buffer1.get(2));
+        System.out.println((char)buffer1.get(3));
+        System.out.println((char)buffer1.get(4));
+        System.out.println((char)buffer1.get(5));
+        printState(buffer1);
+        // A, b, c, d, e, f
+        // Capacity: 8 Limit: 8 Position 0
+
     }
 
     private static void printState(ByteBuffer buffer) {
