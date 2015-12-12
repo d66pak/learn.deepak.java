@@ -9,13 +9,13 @@ import static org.junit.Assert.assertNotEquals;
 /**
  * Created by deepak on 8/12/15.
  */
-public class ThreadLocalExampleTest {
+public class MyThreadLocalExampleTest {
 
     private static class CallableTest implements Callable<String> {
 
         @Override
         public String call() throws Exception {
-            return ThreadLocalExample.getTransactionID();
+            return MyThreadLocalExample.getTransactionID();
         }
     }
 
@@ -37,5 +37,18 @@ public class ThreadLocalExampleTest {
         System.out.println("TransactionID 2 : " + transactionID2);
 
         assertNotEquals(transactionID1, transactionID2);
+    }
+
+    @Test
+    public void testThreadRemoved() throws InterruptedException {
+
+        {
+            Thread thread = new Thread(() -> {
+                System.out.println("Fetching from thread local UUID : " + MyThreadLocalExample.getTransactionID());
+            });
+            thread.start();
+        }
+
+        Thread.sleep(60000);
     }
 }
