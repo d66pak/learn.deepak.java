@@ -7,12 +7,7 @@ import java.util.concurrent.CountDownLatch;
  */
 public class IntrinsicLocks {
 
-    private final CountDownLatch _latch;
     private int _counter;
-
-    public IntrinsicLocks(CountDownLatch latch) {
-        _latch = latch;
-    }
 
     public synchronized int increment() {
 
@@ -23,7 +18,9 @@ public class IntrinsicLocks {
         _counter += 1;
 
         try {
-            _latch.await();
+            // Simulating long work
+            System.out.println("Doing TIME TAKING WORK.....");
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
