@@ -8,7 +8,6 @@ package learn.deepak.java.concurrent;
 public class MySemaphore {
 
     private final Object monitor = new Object();
-    private boolean signal = true;
 
     private int maxPermits = Integer.MAX_VALUE;
     private int availablePermits;
