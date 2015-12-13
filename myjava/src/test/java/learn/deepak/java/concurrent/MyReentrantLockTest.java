@@ -6,31 +6,44 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.*;
-
-public class MyLockTest {
+public class MyReentrantLockTest {
 
     @Test
-    public void testMyLock() throws InterruptedException {
+    public void testMyReentrantLock() throws InterruptedException {
 
-        MyLock lock = new MyLock();
+        MyReentrantLock lock = new MyReentrantLock();
 
         ExecutorService executor = Executors.newFixedThreadPool(2);
 
         executor.submit(() -> {
-            System.out.println("Thread 1 : acquiring lock...");
+            // ------------- Outer --------------
+            System.out.println("Thread 1 OUTER : acquiring lock...");
             try {
                 lock.lock();
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("Thread 1 : lock is acquired, entering critical section");
+            System.out.println("Thread 1 OUTER : lock is acquired, entering critical section");
+
+            // ------------- Inner --------------
+            System.out.println("Thread 1 INNER : acquiring lock...");
+            try {
+                lock.lock();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("Thread 1 INNER : lock is acquired, entering critical section");
             try {
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("Thread 1 : exiting critical section, releasing lock");
+
+            // ------------- Inner --------------
+            System.out.println("Thread 1 INNER : exiting critical section, releasing lock");
+            lock.unlock();
+            // ------------- Outer --------------
+            System.out.println("Thread 1 OUTER : exiting critical section, releasing lock");
             lock.unlock();
         });
 
