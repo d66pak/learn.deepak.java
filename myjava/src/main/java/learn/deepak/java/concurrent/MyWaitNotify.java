@@ -8,14 +8,16 @@ public class MyWaitNotify {
     private final Object monitorObject = new Object();
     private boolean keepWaiting = true;
 
-    public void doWait() {
+    public void doWait() throws InterruptedException {
 
         synchronized (monitorObject) {
             while (keepWaiting) {
                 try {
                     monitorObject.wait();
                 } catch (InterruptedException e) {
-                    System.out.println("Wait interrupted! keepWaiting : " + keepWaiting);
+                    System.out.println("Wait interrupted!");
+                    e.printStackTrace();
+                    throw e;
                 }
             }
 

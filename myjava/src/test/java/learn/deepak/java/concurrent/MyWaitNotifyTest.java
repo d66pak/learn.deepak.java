@@ -24,7 +24,11 @@ public class MyWaitNotifyTest {
         public void run() {
 
             System.out.println("Thread 1, waiting for a signal from thread 2...");
-            this.waitNotify.doWait();
+            try {
+                this.waitNotify.doWait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             System.out.println("Thread 1, received GO signal from thread 2");
         }
     }
